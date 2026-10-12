@@ -1,0 +1,29 @@
+{
+  "build": {
+    "cpu": "cortex-m0",
+    "extra_flags": "-DCH579 -DCH57X -DCH57x",
+    "f_cpu": "32000000L",
+    "mcu": "ch579m",
+    "pin_count": 48,
+    "series": "ch579",
+    "spl_series": "ch579"
+  },
+  "debug": {
+    "svd_path": "CH579SFR.svd"
+  },
+  "frameworks": [
+    "noneos-sdk"
+  ],
+  "name": "Generic CH579M",
+  "upload": {
+    "maximum_ram_size": 32768,
+    "maximum_size": 256000,
+    "offset_address": "0x00000000",
+    "protocol": "isp",
+    "protocols": [
+      "isp"
+    ]
+  },
+  "url": "https://www.wch.cn/products/CH579.html",
+  "vendor": "W.CH"
+}

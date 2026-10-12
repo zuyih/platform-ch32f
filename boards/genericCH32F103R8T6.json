@@ -1,0 +1,39 @@
+{
+  "build": {
+    "clock_source": "hsi+pll",
+    "cpu": "cortex-m3",
+    "extra_flags": "-DCH32F103R8 -DCH32F10X -DCH32F10x -DCH32F103",
+    "f_cpu": "72000000L",
+    "mcu": "ch32f103r8t6",
+    "pin_count": 64,
+    "series": "ch32f103",
+    "spl_series": "ch32f10x"
+  },
+  "debug": {
+    "onboard_tools": [
+      "wch-link"
+    ],
+    "openocd_cputapid": "0x2ba01477",
+    "openocd_target": "stm32f1x",
+    "svd_path": "CH32F103xx.svd"
+  },
+  "frameworks": [
+    "noneos-sdk",
+    "freertos",
+    "rt-thread"
+  ],
+  "name": "Generic CH32F103R8T6",
+  "upload": {
+    "maximum_ram_size": 20480,
+    "maximum_size": 65536,
+    "offset_address": "0x08000000",
+    "protocol": "wch-link",
+    "protocols": [
+      "wch-link",
+      "cmsis-dap",
+      "isp"
+    ]
+  },
+  "url": "https://www.wch.cn/products/CH32F103.html",
+  "vendor": "W.CH"
+}
