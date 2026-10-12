@@ -13,8 +13,7 @@
     "onboard_tools": [
       "wch-link"
     ],
-    "openocd_cputapid": "0x2ba01477",
-    "openocd_target": "stm32f1x",
+    "openocd_target": "ch32f1x",
     "svd_path": "CH32F103xx.svd"
   },
   "frameworks": [

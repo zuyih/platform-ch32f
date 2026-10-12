@@ -57,7 +57,7 @@ class Ch32fPlatform(PlatformBase):
             debug["tools"] = {}
 
         # CMSIS-DAP probes (WCH-Link(E) in ARM mode, DAPLink, ...) through
-        # OpenOCD. The CH32F flash is programmed by the stm32f1x driver.
+        # OpenOCD. The CH32F flash is programmed by the wch_arm driver.
         # Chips without OpenOCD support (CH579) have no openocd_target.
         upload_protocols = board.manifest.get("upload", {}).get("protocols", [])
         for tool in self.OPENOCD_TOOLS:
@@ -73,9 +73,6 @@ class Ch32fPlatform(PlatformBase):
                     ["-c", "adapter usb vid_pid %s" % " ".join(self.WCH_LINK_USB_IDS)]
                 )
             server_args.extend(["-c", "transport select swd"])
-            # the SW-DP ID of CH32F differs from the STM32F1
-            if debug.get("openocd_cputapid"):
-                server_args.extend(["-c", "set CPUTAPID %s" % debug.get("openocd_cputapid")])
             server_args.extend(["-f", "target/%s.cfg" % debug.get("openocd_target")])
             server_args.extend(debug.get("openocd_extra_args", []))
             debug["tools"][tool] = {

@@ -36,7 +36,8 @@ package, the CH32F10x, CH32F20x and CH579 EVT of WCH ported to GCC.
 `upload_protocol = wch-link` (default for CH32F) and `upload_protocol = cmsis-dap`
 use OpenOCD from [tool-openocd](https://github.com/zuyih/tool-openocd)
 (Linux x86_64 only for now) with `interface/cmsis-dap.cfg` and
-`target/stm32f1x.cfg`. The WCH-Link(E) is a CMSIS-DAP probe in ARM mode, switch
+`target/ch32f1x.cfg`, which programs the flash with the `wch_arm` driver (the
+fast page programming of the CH32F). The WCH-Link(E) is a CMSIS-DAP probe in ARM mode, switch
 it with `wlink mode-switch` or the WCH-LinkUtility. `wch-link` only connects to
 a WCH-Link in DAP mode (USB ID `1a86:8012`, or `1a86:8011` for the HID mode of
 the WCH-DAPLink), `cmsis-dap` to any CMSIS-DAP probe, e.g. a DAPLink.

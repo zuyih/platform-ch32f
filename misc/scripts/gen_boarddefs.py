@@ -16,10 +16,8 @@ class WCHChipSeries:
     flash_start: str = "0x08000000"
     # upload and debug through CMSIS-DAP probes (WCH-Link in ARM mode,
     # DAPLink, ...) and OpenOCD, or upload through the USB bootloader with
-    # wchisp. CH32F is programmed by the stm32f1x driver of OpenOCD; its
-    # SW-DP reports 0x2ba01477 instead of the 0x1ba01477 of the STM32F1.
-    openocd_target: Optional[str] = "stm32f1x"
-    openocd_cputapid: Optional[str] = "0x2ba01477"
+    # wchisp. CH32F is programmed by the wch_arm driver of OpenOCD.
+    openocd_target: Optional[str] = "ch32f1x"
     upload_protocols: List[str] = field(default_factory=lambda: ["wch-link", "cmsis-dap", "isp"])
 
 CH32F103 = WCHChipSeries("CH32F10x", "cortex-m3", "CH32F103xx.svd", "ch32f10x", 72, "https://www.wch.cn/products/CH32F103.html")
@@ -30,7 +28,7 @@ CH32F208 = WCHChipSeries("CH32F20x", "cortex-m3", "CH32F203xx.svd", "ch32f20x", 
 # CH579: SystemInit() sets 32 MHz. The OpenOCD fork of WCH has no flash
 # driver for it, upload through the USB bootloader (wchisp) only.
 CH579 = WCHChipSeries("CH579", "cortex-m0", "CH579SFR.svd", "ch579", 32, "https://www.wch.cn/products/CH579.html",
-                      frameworks=["noneos-sdk"], flash_start="0x00000000", openocd_target=None, openocd_cputapid=None,
+                      frameworks=["noneos-sdk"], flash_start="0x00000000", openocd_target=None,
                       upload_protocols=["isp"])
 
 PACKAGE_PINS = {
@@ -133,8 +131,6 @@ def create_board_json(info: ChipInfo, board_name:str, output_path: Path, patch_i
     if series.openocd_target:
         base_json["debug"]["onboard_tools"] = ["wch-link"]
         base_json["debug"]["openocd_target"] = series.openocd_target
-        if series.openocd_cputapid:
-            base_json["debug"]["openocd_cputapid"] = series.openocd_cputapid
     # add some classification macros
     if info.is_ch5():
         extra_flags = [
