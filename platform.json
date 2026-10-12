@@ -1,0 +1,69 @@
+{
+  "name": "ch32f",
+  "version": "0.1.0",
+  "title": "WCH CH32F",
+  "description": "CH32F series are industrial-grade general-purpose microcontrollers designed based on the Arm Cortex-M3 core. CH579 is a BLE microcontroller based on the Arm Cortex-M0 core.",
+  "homepage": "https://www.wch.cn/",
+  "license": "Apache-2.0",
+  "keywords": [
+    "dev-platform",
+    "WCH",
+    "ARM",
+    "Cortex-M"
+  ],
+  "engines": {
+    "platformio": "^6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zuyih/platform-ch32f"
+  },
+  "frameworks": {
+    "noneos-sdk": {
+      "package": "framework-wch-arm-sdk",
+      "script": "builder/frameworks/noneos_sdk.py",
+      "description": "The W.CH CH32Fxxx Standard Peripheral Library without OS",
+      "homepage": "https://www.wch.cn/downloads/",
+      "title": "W.CH CH32Fxxx NoneOS SDK"
+    },
+    "freertos": {
+      "package": "framework-wch-arm-sdk",
+      "script": "builder/frameworks/freertos.py",
+      "description": "Real-time operating system for microcontrollers",
+      "homepage": "https://www.freertos.org/",
+      "title": "FreeRTOS"
+    },
+    "rt-thread": {
+      "package": "framework-wch-arm-sdk",
+      "script": "builder/frameworks/rt_thread.py",
+      "description": "RT-Thread is an open source IoT operating system",
+      "homepage": "https://github.com/RT-Thread/rt-thread",
+      "title": "RT-Thread"
+    }
+  },
+  "packages": {
+    "framework-wch-arm-sdk": {
+      "type": "framework",
+      "optional": true,
+      "owner": "platformio",
+      "version": "https://github.com/zuyih/framework-wch-arm-sdk.git"
+    },
+    "toolchain-gccarmnoneeabi": {
+      "type": "toolchain",
+      "owner": "platformio",
+      "version": "~1.140201.0"
+    },
+    "tool-openocd": {
+      "type": "uploader",
+      "optional": true,
+      "owner": "platformio",
+      "version": "https://github.com/zuyih/tool-openocd.git"
+    },
+    "tool-wchisp": {
+      "type": "uploader",
+      "owner": "community-ch32v",
+      "version": "~0.23.240914",
+      "optional": true
+    }
+  }
+}
