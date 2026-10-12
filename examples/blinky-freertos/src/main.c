@@ -13,17 +13,22 @@
 #include "debug.h"
 #include "FreeRTOS.h"
 #include "task.h"
+#include "semphr.h"
 
 
 /* Global define */
-#define TASK1_TASK_PRIO     5
+#define TASK1_TASK_PRIO     4
 #define TASK1_STK_SIZE      256
-#define TASK2_TASK_PRIO     5
+#define TASK2_TASK_PRIO     4
 #define TASK2_STK_SIZE      256
 
 /* Global Variable */
 TaskHandle_t Task1Task_Handler;
 TaskHandle_t Task2Task_Handler;
+/* The tasks have the same priority and share the time slices, a task can be
+ * switched out in the middle of its printf. The mutex keeps the lines of the
+ * tasks apart. */
+SemaphoreHandle_t PrintMutex;
 
 
 
@@ -61,7 +66,9 @@ void task1_task(void *pvParameters)
 		msticks = pdMS_TO_TICKS(500);
     while(1)
     {
+        xSemaphoreTake(PrintMutex, portMAX_DELAY);
         printf("task1 entry\r\n");
+        xSemaphoreGive(PrintMutex);
         GPIO_SetBits(GPIOA, GPIO_Pin_0);
         vTaskDelay(msticks);
         GPIO_ResetBits(GPIOA, GPIO_Pin_0);
@@ -84,7 +91,9 @@ void task2_task(void *pvParameters)
 		msticks = pdMS_TO_TICKS(1000);
     while(1)
     {
+        xSemaphoreTake(PrintMutex, portMAX_DELAY);
         printf("task2 entry\r\n");
+        xSemaphoreGive(PrintMutex);
         GPIO_ResetBits(GPIOA, GPIO_Pin_1);
         vTaskDelay(msticks);
         GPIO_SetBits(GPIOA, GPIO_Pin_1);
@@ -108,6 +117,7 @@ int main(void)
     printf("FreeRTOS Kernel Version:%s\r\n",tskKERNEL_VERSION_NUMBER);
 
     GPIO_Toggle_INIT();
+    PrintMutex = xSemaphoreCreateMutex();
     /* create two task */
     xTaskCreate((TaskFunction_t )task2_task,
                         (const char*    )"task2",
