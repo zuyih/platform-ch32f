@@ -57,7 +57,9 @@ upload_flags =
 through a CMSIS-DAP probe need its 2-wire debug interface, which has to be
 enabled in the configuration of the chip first, e.g. with WCHISPStudio.
 
-`debug_speed` also sets the adapter speed for uploads with OpenOCD.
+The SWD clock is 10 MHz (set by the OpenOCD target configuration), lower it
+with `debug_speed` (in kHz) if the connection is unreliable, e.g. with long
+wires. `debug_speed` also applies to uploads with OpenOCD.
 
 ## CH579 and the BLE library
 
