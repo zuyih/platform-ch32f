@@ -9,6 +9,10 @@
     "spl_series": "ch579"
   },
   "debug": {
+    "onboard_tools": [
+      "wch-link"
+    ],
+    "openocd_target": "ch579",
     "svd_path": "CH579SFR.svd"
   },
   "frameworks": [
@@ -21,7 +25,9 @@
     "offset_address": "0x00000000",
     "protocol": "isp",
     "protocols": [
-      "isp"
+      "isp",
+      "wch-link",
+      "cmsis-dap"
     ]
   },
   "url": "https://www.wch.cn/products/CH579.html",

@@ -34,8 +34,8 @@ class Ch32fPlatform(PlatformBase):
             if upload_protocol != "isp":
                 self.packages.pop("tool-wchisp", None)
             # OpenOCD drives the CMSIS-DAP probes for upload and debug
-            # (installed on demand by the debugger). Chips without OpenOCD
-            # support (CH579) never need it.
+            # (installed on demand by the debugger). Boards without an
+            # OpenOCD target never need it.
             if not board_config.get("debug.openocd_target", "") and upload_protocol not in self.OPENOCD_TOOLS:
                 self.packages.pop("tool-openocd", None)
         return super().configure_default_packages(variables, targets)
@@ -57,8 +57,8 @@ class Ch32fPlatform(PlatformBase):
             debug["tools"] = {}
 
         # CMSIS-DAP probes (WCH-Link(E) in ARM mode, DAPLink, ...) through
-        # OpenOCD. The CH32F flash is programmed by the wch_arm driver.
-        # Chips without OpenOCD support (CH579) have no openocd_target.
+        # OpenOCD. The CH32F flash is programmed by the wch_arm driver, the
+        # CH579 flash by the ch579 driver.
         upload_protocols = board.manifest.get("upload", {}).get("protocols", [])
         for tool in self.OPENOCD_TOOLS:
             if tool not in upload_protocols or tool in debug["tools"] or not debug.get("openocd_target"):

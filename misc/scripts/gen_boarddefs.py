@@ -25,11 +25,12 @@ CH32F203_D6 = WCHChipSeries("CH32F20x", "cortex-m3", "CH32F203xx.svd", "ch32f20x
 CH32F203_D8 = WCHChipSeries("CH32F20x", "cortex-m3", "CH32F203xx.svd", "ch32f20x", 144, "https://www.wch.cn/products/CH32F203.html")
 CH32F207 = WCHChipSeries("CH32F20x", "cortex-m3", "CH32F203xx.svd", "ch32f20x", 144, "https://www.wch.cn/products/CH32F207.html")
 CH32F208 = WCHChipSeries("CH32F20x", "cortex-m3", "CH32F203xx.svd", "ch32f20x", 144, "https://www.wch.cn/products/CH32F208.html")
-# CH579: SystemInit() sets 32 MHz. The OpenOCD fork of WCH has no flash
-# driver for it, upload through the USB bootloader (wchisp) only.
+# CH579: SystemInit() sets 32 MHz. Upload through the USB bootloader
+# (wchisp) by default, CMSIS-DAP probes need the 2-wire debug interface
+# enabled in the configuration of the chip first.
 CH579 = WCHChipSeries("CH579", "cortex-m0", "CH579SFR.svd", "ch579", 32, "https://www.wch.cn/products/CH579.html",
-                      frameworks=["noneos-sdk"], flash_start="0x00000000", openocd_target=None,
-                      upload_protocols=["isp"])
+                      frameworks=["noneos-sdk"], flash_start="0x00000000", openocd_target="ch579",
+                      upload_protocols=["isp", "wch-link", "cmsis-dap"])
 
 PACKAGE_PINS = {
     "QFN28": 28,
